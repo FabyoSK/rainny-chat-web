@@ -1,8 +1,14 @@
-export const Room = ({ room, onRoomClick}) => {
-  return (
-    <div onClick={() => onRoomClick(room.id)}>
-      <p>{room.name}</p>
-      <span>users: {room.participants}</span>
-    </div>
-  );
-}
+import { Container, RoomName } from './styles';
+
+export const Room = ({ room, onRoomClick, isActive }) => (
+  <Container
+    isActive={isActive}
+    onClick={() => onRoomClick(room.id)}
+  >
+    <RoomName>{room.name}</RoomName>
+    {/* <span>
+      users:
+      {room.participants.length}
+    </span> */}
+  </Container>
+);

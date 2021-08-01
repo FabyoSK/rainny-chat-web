@@ -1,16 +1,23 @@
+import { Button } from '../Button';
 import { Room } from '../Room';
 
-export const RoomList = ({ rooms, onRoomClick }) => {
-  return (
-    <div>
-      <div>
-        {rooms.map((room) => (
-          <Room key={room.id} room={room} onRoomClick={onRoomClick}/>
-        ))}
-      </div>
-      <button>
-        Create New Room
-      </button>
-    </div>
-  );
-}
+import { Container, RoomsContainer } from './styles';
+
+export const RoomList = ({ currentRoom, rooms, onRoomClick }) => (
+  <Container>
+    <h1>Available Rooms</h1>
+    <RoomsContainer>
+      {rooms.map((room) => (
+        <Room
+          key={room.id}
+          room={room}
+          onRoomClick={onRoomClick}
+          isActive={currentRoom === room.id}
+        />
+      ))}
+    </RoomsContainer>
+    <Button fullWidth>
+      Create New Room
+    </Button>
+  </Container>
+);
