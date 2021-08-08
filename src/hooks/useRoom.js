@@ -100,12 +100,13 @@ const fakeMessages = [
 export function RoomProvider(props) {
   const { children } = props;
   const [user, setUser] = useState({
-    id: '47f51f43-4645-433c-9e3d-dff5920108ff',
+    id: '263b1d43-f846-4872-8f98-b1e40935bc5b',
     username: 'FSK'
   });
   const [rooms, setRooms] = useState([]);
   const [currentRoom, setCurrentRoom] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState([]);
 
   const handleSaveUser = (user) => {
     setUser(user);
@@ -135,14 +136,12 @@ export function RoomProvider(props) {
   };
 
   const handleSendMessage = (text) => {
-    console.log(text);
     const message = {
       content: text,
       sender_id: user.id,
       receiver_id: currentRoom
     };
     socket.emit('send_room_message', message);
-    setMessages([...messages, { ...message, isMine: true }]);
   };
 
   console.log('Messages =>', messages);
@@ -153,8 +152,9 @@ export function RoomProvider(props) {
     socket.on('fetch_room_message', (params) => {
       handleFormatMessage(params);
     });
+
     socket.on('room_message', (params) => {
-      setMessages([...messages, { params }]);
+      setNewMessage(params);
     });
 
     socket.on('connect', () => {
@@ -169,6 +169,11 @@ export function RoomProvider(props) {
       socket.off('message');
     };
   }, [socket]);
+
+  useEffect(() => {
+    const isMine = newMessage.sender_id === user.id;
+    setMessages([...messages, { ...newMessage, isMine }]);
+  }, [newMessage]);
 
   return (
     <RoomContext.Provider

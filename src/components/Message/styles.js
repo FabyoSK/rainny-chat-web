@@ -14,6 +14,9 @@ export const MessageSenderName = styled.p`
 `;
 
 export const MessageContent = styled.div`
+  background-color: ${(props) => (props.isMine
+    ? '#eee'
+    : '')};
   padding: 1rem;
   border: 1px solid red;
   border-radius: 1rem;
