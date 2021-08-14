@@ -9,10 +9,12 @@ export const GlobalStyle = createGlobalStyle`
 
   :root {
     --red: #e02041;
+    --blue: #1CC5DC;
+    --green: #81c784;
 
-    --background: #13131a;
-
-    --foreground: #202020;
+    --accent: #81c784;
+    --background: #303030;
+    --foreground: #424242;
 
     --text: #dddddd;
     --title-secondary: #41414d;
@@ -45,6 +47,11 @@ export const GlobalStyle = createGlobalStyle`
   }
   h1 {
     font-size: 2rem;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-size: 1.5rem;
     font-weight: 500;
   }
 
