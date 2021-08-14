@@ -11,14 +11,19 @@ export const Container = styled.div`
 
 export const MessageSenderName = styled.p`
   padding: 0.25rem 0;
+  color: var(--text);
+  font-size: 1rem;
 `;
 
 export const MessageContent = styled.div`
   background-color: ${(props) => (props.isMine
-    ? '#eee'
-    : '')};
+    ? 'var(--accent)'
+    : 'var(--foreground)')};
+  color: ${(props) => (props.isMine
+    ? 'var(--title)'
+    : 'var(--text)')};
+
   padding: 1rem;
-  border: 1px solid red;
   border-radius: 1rem;
   max-width: 80%;
 `;

@@ -10,14 +10,25 @@ export const Container = styled.input`
   background: #eee;
   font-weight: 400;
   font-size: 1rem;
+  background-color: ${(props) => (props.backgroundColor
+    ? `var(--${props.backgroundColor})`
+    : 'var(--background)')};
+  color:${(props) => (props.color
+    ? `var(--${props.color})`
+    : 'var(--text-primary)')};
+  border: 0;
+  border-radius: 0.5rem;
+
   &::placeholder {
-    color: var(--text);
+    color: var(--text-primary);
   }
+
   & + input {
     margin-top: 1rem;
   }
 
-  &:hover{
-    background-color: #eee;
-  }
+
+  border: ${(props) => (props.hasError
+    ? '1px solid var(--red)'
+    : '')};
 `;

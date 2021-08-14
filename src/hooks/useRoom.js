@@ -1,7 +1,9 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import Link from 'next/link';
 import { socketDispatchType } from '../constants';
 import { api } from '../services/api';
 import { socket } from '../contexts/socket';
+import { useAuth } from './useAuth';
 
 export const RoomContext = createContext();
 
@@ -99,18 +101,13 @@ const fakeMessages = [
 
 export function RoomProvider(props) {
   const { children } = props;
-  const [user, setUser] = useState({
-    id: '263b1d43-f846-4872-8f98-b1e40935bc5b',
-    username: 'FSK'
-  });
+
+  const { user } = useAuth();
+
   const [rooms, setRooms] = useState([]);
   const [currentRoom, setCurrentRoom] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState([]);
-
-  const handleSaveUser = (user) => {
-    setUser(user);
-  };
 
   const handleFetchRooms = async () => {
     const response = await api.get('rooms');
@@ -124,13 +121,14 @@ export function RoomProvider(props) {
     setCurrentRoom(id);
     socket.emit('fetch_room_message', { room_id: id });
   };
+
   const handleFormatMessage = (allMessages) => {
     const filterMessage = allMessages
       .map((message) => {
-        if (message.sender_id === user.id) {
+        if (message.sender === user.id) {
           return { ...message, id: message._id, isMine: true };
         }
-        return message;
+        return { ...message, senderName: 'fsk' };
       });
     setMessages(filterMessage);
   };
@@ -149,9 +147,7 @@ export function RoomProvider(props) {
   console.log('currentRoom =>', currentRoom);
 
   useEffect(() => {
-    socket.on('fetch_room_message', (params) => {
-      handleFormatMessage(params);
-    });
+    socket.on('fetch_room_message', handleFormatMessage);
 
     socket.on('room_message', (params) => {
       setNewMessage(params);
@@ -161,17 +157,13 @@ export function RoomProvider(props) {
       console.log('I\'m connected with the back-end');
     });
 
-    // socket.on(socketDispatchType.MESSAGE, (message) => {
-    //   handleAddMessage(message);
-    // });
-
     return () => {
       socket.off('message');
     };
   }, [socket]);
 
   useEffect(() => {
-    const isMine = newMessage.sender_id === user.id;
+    const isMine = newMessage.sender === user.id;
     setMessages([...messages, { ...newMessage, isMine }]);
   }, [newMessage]);
 
@@ -182,7 +174,6 @@ export function RoomProvider(props) {
         rooms,
         messages,
         currentRoom,
-        handleSaveUser,
         handleFetchRooms,
         handleRoomSelect,
         handleSendMessage
@@ -192,6 +183,7 @@ export function RoomProvider(props) {
     </RoomContext.Provider>
   );
 }
+
 export function useRoom() {
   const context = useContext(RoomContext);
 

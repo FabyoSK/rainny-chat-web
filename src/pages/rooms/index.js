@@ -1,11 +1,13 @@
 import {
-  useContext, useEffect, useState
-} from 'react';
+  useEffect,
+  useState } from 'react';
 import { useRoom } from '../../hooks/useRoom';
 import { RoomList } from '../../components/RoomList';
 import { Chat } from '../../components/Chat';
 import { socketDispatchType } from '../../constants';
-import styles from './room.module.scss';
+import { Container } from './styles';
+import { AuthGuard } from '../../components/auth/AuthGuard';
+import { RoomModal } from '../../components/RoomModal';
 
 export default function Room() {
   const {
@@ -17,21 +19,40 @@ export default function Room() {
     handleSendMessage
   } = useRoom();
 
-  useEffect(() => {
-    handleFetchRooms();
+  const [isRoomModalOpen, setIsRoomModalOpen] = useState(
+    false
+  );
+
+  function handleOpenRoomModal() {
+    setIsRoomModalOpen(true);
+  }
+
+  function handleCloseRoomModal() {
+    setIsRoomModalOpen(false);
+  }
+
+  useEffect(async () => {
+    await handleFetchRooms();
   }, []);
 
   return (
-    <div className={styles.room}>
-      <RoomList
-        rooms={rooms}
-        onRoomClick={handleRoomSelect}
-        currentRoom={currentRoom}
+    <AuthGuard>
+      <RoomModal
+        isOpen={isRoomModalOpen}
+        onRequestClose={handleCloseRoomModal}
       />
-      <Chat
-        messages={messages}
-        onSendButtonClick={handleSendMessage}
-      />
-    </div>
+      <Container>
+        <RoomList
+          rooms={rooms}
+          onRoomClick={handleRoomSelect}
+          currentRoom={currentRoom}
+          onJoinRoomButtonClick={handleOpenRoomModal}
+        />
+        <Chat
+          messages={messages}
+          onSendButtonClick={handleSendMessage}
+        />
+      </Container>
+    </AuthGuard>
   );
 }

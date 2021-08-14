@@ -5,19 +5,22 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   transition: 150ms all;
-  border: 1px solid #eee;
 
   background-color: ${(props) => (props.isActive
-    ? '#eee'
+    ? 'var(--accent)'
+    : '')};
+  color: ${(props) => (props.isActive
+    ? 'white'
     : '')};
 
   &:hover {
-    background-color: #eee;
-    border-radius: 1rem;
+    background-color: var(--accent);
+    color: white;
+    filter: brightness(1.1);
   }
 
 `;
 
 export const RoomName = styled.div`
-  margin: 2rem 0;
+  margin: 1rem 0;
 `;

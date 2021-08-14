@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  padding: 3rem;
   background: var(--foreground);
-  color: var(--text-secondary);
-`;
-
-export const RoomsContainer = styled.div`
-  margin: 2rem 0;
+  text-align: center;
+  border-radius: 0.5rem;
 `;

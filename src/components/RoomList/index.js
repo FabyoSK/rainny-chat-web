@@ -3,7 +3,7 @@ import { Room } from '../Room';
 
 import { Container, RoomsContainer } from './styles';
 
-export const RoomList = ({ currentRoom, rooms, onRoomClick }) => (
+export const RoomList = ({ currentRoom, rooms, onRoomClick, onJoinRoomButtonClick }) => (
   <Container>
     <h1>Available Rooms</h1>
     <RoomsContainer>
@@ -16,8 +16,11 @@ export const RoomList = ({ currentRoom, rooms, onRoomClick }) => (
         />
       ))}
     </RoomsContainer>
-    <Button fullWidth>
-      Create New Room
+    <Button
+      fullWidth
+      onClick={onJoinRoomButtonClick}
+    >
+      Join a Room
     </Button>
   </Container>
 );
