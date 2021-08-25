@@ -6,7 +6,7 @@ import { Button } from '../../../components/Button';
 import { Card } from '../../../components/Card';
 import { Input } from '../../../components/Input';
 import { useAuth } from '../../../hooks/useAuth';
-import { Container, Title } from '../styles';
+import { Container, Title } from '../../../styles/authStyles';
 
 export default function Register() {
   const { register } = useAuth();

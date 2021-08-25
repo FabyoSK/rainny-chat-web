@@ -1,11 +1,11 @@
 import {
   useEffect,
-  useState } from 'react';
+  useState
+} from 'react';
 import { useRoom } from '../../hooks/useRoom';
 import { RoomList } from '../../components/RoomList';
 import { Chat } from '../../components/Chat';
-import { socketDispatchType } from '../../constants';
-import { Container } from './styles';
+import { Container } from '../../styles/roomStyles';
 import { AuthGuard } from '../../components/auth/AuthGuard';
 import { RoomModal } from '../../components/RoomModal';
 

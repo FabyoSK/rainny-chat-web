@@ -1,5 +1,4 @@
 import { useRouter } from 'next/dist/client/router';
-import Link from 'next/link';
 import {
   useState
 } from 'react';
@@ -7,7 +6,7 @@ import { Button } from '../../../components/Button';
 import { Card } from '../../../components/Card';
 import { Input } from '../../../components/Input';
 import { useAuth } from '../../../hooks/useAuth';
-import { Container, FormErrorText, Title } from '../styles';
+import { Container, FormErrorText, Title } from '../../../styles/authStyles';
 
 export default function Login() {
   const { login } = useAuth();
